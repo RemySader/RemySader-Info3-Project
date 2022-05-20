@@ -1,4 +1,17 @@
 # Flask Smart Basket Application
+## Introduction to our smart basket
+
+Imagine yourself at the end of a long day of work. You remembered you have to go to the grocery store to buy some stuff for the house. The last thing you want to do is wait at checkout. Or even now with the corona virus going around, you may not want to put yourself at risk and wait in line with a lot of people around you, exposing yourself to the this deadly virus.
+
+Don’t worry, we got you covered.
+
+With our smart basket, you will never have to go through the pain of checkout again.
+How you may ask?
+1-You will find at your local store a self checkout station with the label ‘smart basket’ where you will be able to scan the items you want to buy.
+2-Make sure to sign in to your account on our website so you can visualize the items that you are scanning.
+3-At the end of your shopping you will be asked to put your card information and proceed with payment.
+See, 3 easy steps that will make your shopping experience quicker, safer, and more enjoyable.
+Buy smart not hard.
 
 ## Setup
 
