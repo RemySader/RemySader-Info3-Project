@@ -37,7 +37,6 @@ def login():
         flash('User does not exist!!')
         return redirect(url_for('account_page'))  #if we don't find the user's information from the database, that means the user does not exist and he can not login
     if user.confirmed == False:
-        flash('Please confirm your email!!')
         email = request.form['email-address']
 
         token = s.dumps(email, salt='email-confirm')
@@ -50,7 +49,7 @@ def login():
 
         mail.send(msg)  
 
-        return '<h1>Please check your email address to complete your Smart Basket Account</h1>'
+        return '<h1>You can not Login without verifying your account. Please check your email address to complete your Smart Basket Account</h1>'
         # return redirect(url_for('account_page'))  #Every user get a verification link once they signup, and they can not login if they don't verify their email
     if user.check_password(form['password']):
         session['user'] = user.id
