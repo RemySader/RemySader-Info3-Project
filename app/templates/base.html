@@ -1,0 +1,599 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta charset="utf-8">
+	<title>Smart Basket</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css" integrity="sha384-DyZ88mC6Up2uqS4h/KRgHuoeGwBcD4Ng9SiP4dIRy0EXTlnuz47vAwmeGwVChigm" crossorigin="anonymous"/>
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet"> <!-- font family poppins -->
+	<script type="text/javascript" src="{{ url_for('static', filename='js/cart.js') }}"></script>
+
+</head>
+<body>
+	<nav class='navigation'>
+
+		<!-- Menu btn for small screens -->
+		<input type="checkbox" class="menu-btn" id="menu-btn">
+		<label for="menu-btn" class="menu-icon">
+			<span class="nav-icon"></span>
+		</label>
+
+		<!-- Navigation bar -->
+		<ul class="menu">
+			<li><a href="{{ url_for('index') }}" class="active">Home</a></li>
+			<li><a href="#all-products">Products</a></li>
+			<li><a href="#about-us">About us</a></li>
+            <li>{% block li %}{% endblock %}</li>
+		</ul>
+
+		<div class="right">
+			<a href="#cart-section" class="cart">
+				<i class="fa fa-shopping-basket" aria-hidden="true"></i>
+				<!-- <span>0</span> -->
+			</a>
+		</div>
+	</nav>
+
+	<!-- Presentation -->
+	<section class="presentation"><h1>Introduction to our smart basket</h1><br>
+		<p>Imagine yourself at the end of a long day of work. You remembered you have to go to the grocery store to buy some stuff for the house. The last thing you want to do is wait at checkout. Or even now with the corona virus going around, you may not want to put yourself at risk and wait in line with a lot of people around you, exposing yourself to the this deadly virus.</p><br>
+		<h2>Don’t worry, we got you covered.</h2><br>
+		<p>With our smart basket, you will never have to go through the pain of checkout again. 
+		<br>How you may ask?<br>
+		1-You will find at your local store a self checkout station with the label ‘smart basket’ where you will be able to scan the items you want to buy. <br>
+		2-Make sure to sign in to your account on our website so you can visualize the items that you are scanning.<br>
+		3-At the end of your shopping you will be asked to put your card information and proceed with payment.<br>
+		See, 3 easy steps that will make your shopping experience quicker, safer, and more enjoyable.</p>
+		<h3>Buy smart not hard.</h3>
+	</section>
+
+	<section id="bg1">
+		<div class="header1">
+			<h1>Our New Smart Basket Is Now Available</h1>
+		</div>
+	</section>
+
+	<!-- All Categories -->
+	<section id="category">
+		
+		<div class="category-heading">
+			<h2>Category</h2>
+		</div>	
+
+		<div class="category-container">
+			
+			<a href="#all-products" class="category-box">
+				<img src="{{ url_for('static', filename='images/fruitsandvegetables1.png') }}" alt="Fish">
+				<span>Fruits & Vegetables</span>
+			</a>
+
+			<a href="#all-products" class="category-box">
+				<img src="{{ url_for('static', filename='images/grocery1.png') }}" alt="Fish">
+				<span>Grocery</span>
+			</a>
+
+			<a href="#all-products" class="category-box">
+				<img src="{{ url_for('static', filename='images/beverages1.png') }}" alt="Fish">
+				<span>Beverages</span>
+			</a>
+
+			<a href="#all-products" class="category-box">
+				<img src="{{ url_for('static', filename='images/frozen1.png') }}" alt="Fish">
+				<span>Frozen</span>
+			</a>
+
+			<a href="#all-products" class="category-box">
+				<img src="{{ url_for('static', filename='images/alcohol1.png') }}" alt="Fish">
+				<span>Alcohol</span>
+			</a>
+
+		</div>
+
+
+	</section>
+
+	<!-- All Products -->
+
+	<h1 id="all-products">All Products</h1>
+	
+	
+	<section id="all-products">
+			
+			<div class="products-heading">
+				<h3>Fruits And Vegetables</h3>
+			</div>
+
+			<div class="product-container">
+				
+				<div class="product-box">
+					<img class='shop-item-image' src="{{ url_for('static', filename='images/apple.png') }}" alt="apple">
+					<strong>Apple</strong>
+					<span class="shop-item-title">Apple</span>
+					<span class="quantity">1 KG</span>
+					<span class="price">23 000 LL</span>
+					<a class="cart-btn">
+						<i class="fas fa-shopping-bag"></i> Add To Cart
+					</a>
+
+				</div>
+
+				<div class="product-box">
+					<img class='shop-item-image' src="{{ url_for('static', filename='images/onions.png') }}" alt="onions">
+					<strong>Onions</strong>
+					<span class="shop-item-title">Onions</span>
+					<span class="quantity">1 KG</span>
+					<span class="price">7 000 LL</span>
+					<a class="cart-btn">
+						<i class="fas fa-shopping-bag"></i> Add To Cart
+					</a>
+
+				</div>
+
+				<div class="product-box">
+					<img class='shop-item-image' src="{{ url_for('static', filename='images/potato.png') }}" alt="potato">
+					<strong>Potato</strong>
+					<span class="shop-item-title">Potato</span>
+					<span class="quantity">1 KG</span>
+					<span class="price">18 000 LL</span>
+					<a class="cart-btn">
+						<i class="fas fa-shopping-bag"></i> Add To Cart
+					</a>
+
+				</div>
+
+				<div class="product-box">
+					<img class='shop-item-image' src="{{ url_for('static', filename='images/banana.png') }}" alt="banana">
+					<strong>Banana</strong>
+					<span class="shop-item-title">Banana</span>
+					<span class="quantity">1 KG</span>
+					<span class="price">15 000 LL</span>
+					<a class="cart-btn">
+						<i class="fas fa-shopping-bag"></i> Add To Cart
+					</a>
+
+				</div>
+
+				<div class="product-box">
+					<img class='shop-item-image' src="{{ url_for('static', filename='images/strawberries.png') }}" alt="strawberries">
+					<strong>Strawberries</strong>
+					<span class="shop-item-title">Strawberries</span>
+					<span class="quantity">1 KG</span>
+					<span class="price">28 000 LL</span>
+					<a class="cart-btn">
+						<i class="fas fa-shopping-bag"></i> Add To Cart
+					</a>
+
+				</div>
+
+				<div class="product-box">
+					<img class='shop-item-image' src="{{ url_for('static', filename='images/concombre.png') }}" alt="concombre">
+					<strong>Cucumber</strong>
+					<span class="shop-item-title">Cucumber</span>
+					<span class="quantity">1 KG</span>
+					<span class="price">12 000 LL</span>
+					<a class="cart-btn">
+						<i class="fas fa-shopping-bag"></i> Add To Cart
+					</a>
+
+				</div>
+
+
+
+			</div>
+
+
+
+
+
+
+
+
+			<div class="products-heading">
+				<h3>Grocery</h3>
+			</div>
+
+			<div class="product-container">
+				
+				<div class="product-box">
+					<img class='shop-item-image' src="{{ url_for('static', filename='images/ketchup.jpg') }}" alt="ketchup">
+					<strong>Heinz Ketchup</strong>
+					<span class="shop-item-title">Ketchup</span>
+					<span class="quantity">per piece</span>
+					<span class="price">30 000 LL</span>
+					<a class="cart-btn">
+						<i class="fas fa-shopping-bag"></i> Add To Cart
+					</a>
+
+				</div>
+
+				<div class="product-box">
+					<img class='shop-item-image' src="{{ url_for('static', filename='images/mustard.jpg') }}" alt="mustard">
+					<strong>Mustard</strong>
+					<span class="shop-item-title">Mustard</span>
+					<span class="quantity">per piece</span>
+					<span class="price">32 000 LL</span>
+					<a class="cart-btn">
+						<i class="fas fa-shopping-bag"></i> Add To Cart
+					</a>
+
+				</div>
+
+				<div class="product-box">
+					<img class='shop-item-image' src="{{ url_for('static', filename='images/mayonnaise.jpg') }}" alt="mayonnaise">
+					<strong>Heinz Mayonnaise</strong>
+					<span class="shop-item-title">Mayonnaise</span>
+					<span class="quantity">per piece</span>
+					<span class="price">27 000 LL</span>
+					<a class="cart-btn">
+						<i class="fas fa-shopping-bag"></i> Add To Cart
+					</a>
+
+				</div>
+
+				<div class="product-box">
+					<img class='shop-item-image' src="{{ url_for('static', filename='images/jam.jpg') }}" alt="jam">
+					<strong>Strawberry Jam</strong>
+					<span class="shop-item-title">Jam</span>
+					<span class="quantity">per piece</span>
+					<span class="price">35 000 LL</span>
+					<a class="cart-btn">
+						<i class="fas fa-shopping-bag"></i> Add To Cart
+					</a>
+
+				</div>
+
+				<div class="product-box">
+					<img class='shop-item-image' src="{{ url_for('static', filename='images/tuna.jpg') }}" alt="tuna">
+					<strong>Tuna</strong>
+					<span class="shop-item-title">Tuna</span>
+					<span class="quantity">per piece</span>
+					<span class="price">39 000 LL</span>
+					<a class="cart-btn">
+						<i class="fas fa-shopping-bag"></i> Add To Cart
+					</a>
+
+				</div>
+
+				<div class="product-box">
+					<img class='shop-item-image' src="{{ url_for('static', filename='images/toothpaste.jpg') }}" alt="toothpaste">
+					<strong>Crest Toothpaste</strong>
+					<span class="shop-item-title">Toothpaste</span>
+					<span class="quantity">per piece</span>
+					<span class="price">60 000 LL</span>
+					<a class="cart-btn">
+						<i class="fas fa-shopping-bag"></i> Add To Cart
+					</a>
+
+				</div>
+
+				<div class="product-box">
+					<img class='shop-item-image' src="{{ url_for('static', filename='images/shampoo.jpg') }}" alt="shampoo">
+					<strong>Head & Shoulders Shampoo Ketchup</strong>
+					<span class="shop-item-title">Shampoo</span>
+					<span class="quantity">per piece</span>
+					<span class="price">55 000 LL</span>
+					<a class="cart-btn">
+						<i class="fas fa-shopping-bag"></i> Add To Cart
+					</a>
+
+				</div>
+
+				
+
+
+
+
+			</div>
+
+			<div class="products-heading">
+				<h3>Beverages</h3>
+			</div>
+
+			<div class="product-container">
+				
+				<div class="product-box">
+					<img class='shop-item-image' src="{{ url_for('static', filename='images/pepsi.jpg') }}" alt="pepsi">
+					<strong>Pepsi</strong>
+					<span class="shop-item-title">Pepsi</span>
+					<span class="quantity">1.25L</span>
+					<span class="price">22 000 LL</span>
+					<a class="cart-btn">
+						<i class="fas fa-shopping-bag"></i> Add To Cart
+					</a>
+
+				</div>
+
+				<div class="product-box">
+					<img class='shop-item-image' src="{{ url_for('static', filename='images/seven.jpg') }}" alt="seven">
+					<strong>7 UP</strong>
+					<span class="shop-item-title">7 UP</span>
+					<span class="quantity">1.25L</span>
+					<span class="price">22 000 LL</span>
+					<a class="cart-btn">
+						<i class="fas fa-shopping-bag"></i> Add To Cart
+					</a>
+
+				</div>
+
+				<div class="product-box">
+					<img class='shop-item-image' src="{{ url_for('static', filename='images/perrier.jpg') }}" alt="perrier">
+					<strong>Perrier</strong>
+					<span class="shop-item-title">Perrier</span>
+					<span class="quantity">0.5L</span>
+					<span class="price">18 000 LL</span>
+					<a class="cart-btn">
+						<i class="fas fa-shopping-bag"></i> Add To Cart
+					</a>
+
+				</div>
+
+				<div class="product-box">
+					<img class='shop-item-image' src="{{ url_for('static', filename='images/icetea.jpg') }}" alt="icetea">
+					<strong>Ice Tea</strong>
+					<span class="shop-item-title">Ice Tea</span>
+					<span class="quantity">per piece</span>
+					<span class="price">8 000 LL</span>
+					<a class="cart-btn">
+						<i class="fas fa-shopping-bag"></i> Add To Cart
+					</a>
+
+				</div>
+
+				<div class="product-box">
+					<img class='shop-item-image' src="{{ url_for('static', filename='images/balkis.jpg') }}" alt="balkis">
+					<strong>Balkis Orange Jus</strong>
+					<span class="shop-item-title">Jus</span>
+					<span class="quantity">1L</span>
+					<span class="price">26 000 LL</span>
+					<a class="cart-btn">
+						<i class="fas fa-shopping-bag"></i> Add To Cart
+					</a>
+
+				</div>
+
+
+			</div>
+
+
+
+			<div class="products-heading">
+				<h3>Frozen</h3>
+			</div>
+
+			<div class="product-container">
+				
+				<div class="product-box">
+					<img class='shop-item-image' src="{{ url_for('static', filename='images/crabsticks.jpg') }}" alt="crabsticks">
+					<strong>Siblou Crab Sticks</strong>
+					<span class="shop-item-title">Crab Sticks</span>
+					<span class="quantity">per piece</span>
+					<span class="price">55 000 LL</span>
+					<a class="cart-btn">
+						<i class="fas fa-shopping-bag"></i> Add To Cart
+					</a>
+
+				</div>
+
+				<div class="product-box">
+					<img class='shop-item-image' src="{{ url_for('static', filename='images/crab.jpg') }}" alt="crab">
+					<strong>Siblou Crab Claws</strong>
+					<span class="shop-item-title">Crab</span>
+					<span class="quantity">per piece</span>
+					<span class="price">70 000 LL</span>
+					<a class="cart-btn">
+						<i class="fas fa-shopping-bag"></i> Add To Cart
+					</a>
+
+				</div>
+
+				<div class="product-box">
+					<img class='shop-item-image' src="{{ url_for('static', filename='images/fish.jpg') }}" alt="fish">
+					<strong>Siblou Fish Filet</strong>
+					<span class="shop-item-title">Fish</span>
+					<span class="quantity">per piece</span>
+					<span class="price">60 000 LL</span>
+					<a class="cart-btn">
+						<i class="fas fa-shopping-bag"></i> Add To Cart
+					</a>
+
+				</div>
+
+				<div class="product-box">
+					<img class='shop-item-image' src="{{ url_for('static', filename='images/fries.jpg') }}" alt="fries">
+					<strong>Plein Soleil Fries</strong>
+					<span class="shop-item-title">Fries</span>
+					<span class="quantity">per piece</span>
+					<span class="price">30 000 LL</span>
+					<a class="cart-btn">
+						<i class="fas fa-shopping-bag"></i> Add To Cart
+					</a>
+
+				</div>
+
+				<div class="product-box">
+					<img class='shop-item-image' src="{{ url_for('static', filename='images/sambousik.jpg') }}" alt="sambousik">
+					<strong>Lamesa Sambousik</strong>
+					<span class="shop-item-title">Sambousik</span>
+					<span class="quantity">per piece</span>
+					<span class="price">30 000 LL</span>
+					<a class="cart-btn">
+						<i class="fas fa-shopping-bag"></i> Add To Cart
+					</a>
+
+				</div>
+
+				<div class="product-box">
+					<img class='shop-item-image' src="{{ url_for('static', filename='images/mloukhieh.jpg') }}" alt="mloukhieh">
+					<strong>Al Wadi Mloukhieh</strong>
+					<span class="shop-item-title">Mloukhieh</span>
+					<span class="quantity">per piece</span>
+					<span class="price">35 000 LL</span>
+					<a class="cart-btn">
+						<i class="fas fa-shopping-bag"></i> Add To Cart
+					</a>
+
+				</div>
+
+			</div>
+
+
+
+
+
+
+			<div class="products-heading">
+				<h3>Alcohol</h3>
+			</div>
+
+			<div class="product-container">
+				
+				<div class="product-box">
+					<img class='shop-item-image' src="{{ url_for('static', filename='images/jager.jpg') }}" alt="jager">
+					<strong>Jagermeister</strong>
+					<span class="shop-item-title">Jager</span>
+					<span class="quantity">0.7L</span>
+					<span class="price">120 000 LL</span>
+					<a class="cart-btn">
+						<i class="fas fa-shopping-bag"></i> Add To Cart
+					</a>
+
+				</div>
+
+				<div class="product-box">
+					<img class='shop-item-image' src="{{ url_for('static', filename='images/jackdaniels.jpg') }}" alt="jackdaniels">
+					<strong>Jack Daniels Whiskey</strong>
+					<span class="shop-item-title">Whiskey</span>
+					<span class="quantity">0.7L</span>
+					<span class="price">120 000 LL</span>
+					<a class="cart-btn">
+						<i class="fas fa-shopping-bag"></i> Add To Cart
+					</a>
+
+				</div>
+
+				<div class="product-box">
+					<img class='shop-item-image' src="{{ url_for('static', filename='images/beer.jpg') }}" alt="beer">
+					<strong>Heineken Beer</strong>
+					<span class="shop-item-title">Beer</span>
+					<span class="quantity">per piece</span>
+					<span class="price">16 000 LL</span>
+					<a class="cart-btn">
+						<i class="fas fa-shopping-bag"></i> Add To Cart
+					</a>
+
+				</div>
+
+				<div class="product-box">
+					<img class='shop-item-image' src="{{ url_for('static', filename='images/vodka.jpg') }}" alt="vodka">
+					<strong>Absolute Vodka</strong>
+					<span class="shop-item-title">Vodka</span>
+					<span class="quantity">per piece</span>
+					<span class="price">85 000 LL</span>
+					<a class="cart-btn">
+						<i class="fas fa-shopping-bag"></i> Add To Cart
+					</a>
+
+				</div>
+
+				<div class="product-box">
+					<img class='shop-item-image' src="{{ url_for('static', filename='images/wine.jpg') }}" alt="wine">
+					<strong>Ksara Wine</strong>
+					<span class="shop-item-title">Wine</span>
+					<span class="quantity">0.7L</span>
+					<span class="price">80 000 LL</span>
+					<a class="cart-btn">
+						<i class="fas fa-shopping-bag"></i> Add To Cart
+					</a>
+
+				</div>
+
+				
+
+
+			</div>
+
+
+
+	</section>
+
+
+	<!--cart-->
+
+	<!-- <section class="container content-section"> -->
+	<section id="cart-section">
+		<h2 class="section-header">Cart</h2>
+		<div class="cart-row">
+			<span class="cart-item cart-header cart-column">Item</span>
+			<span class="cart-price cart-header cart-column">Price</span>
+			<span class="cart-quantity cart-header cart-column">Quantity</span>
+		</div>
+		<div class="cart-items">
+		</div>
+		<div class="cart-total">
+			<strong class="cart-total-title">Total</strong>
+			<span class="cart-total-price">LL0</span>
+		</div>
+		{% block a %}{% endblock %}
+		{% block button %}{% endblock %}
+		<!-- <button class="btn btn-primary btn-purchase" type="button">Purchase</button> -->
+	 </section>
+
+
+	 <!-- About us -->
+	<section id="about-us">
+		<h1 class="s1">
+			About us	
+		</h1>
+		<p class="s2">
+		We’re a group of 6 university students working to make grocery shopping a better and safer experience for everyone. 
+		As ESIB students, it is our responsibility to make the Lebanese people feel more comfortable while doing any task, seeing as living has become a chore for some of them, especially with the economic crisis.
+
+		How the idea came up:
+		Most of us live alone and are studying most of the time, and grocery shopping is a task that can take a lot of time. Seeing as we don’t have much time to lose with our busy schedule, and with the emergence of the corona virus, we found that a self checkout is a good solution for solving these two problems. And with that, we decided to create ‘Smart Basket’, a self checkout station that makes life easier.
+		</p>
+	</section>
+
+
+	<!-- Footer -->
+
+	<footer>
+		<div class="footer-container">
+			
+			<div class="footer-links">
+				<strong>Opening Hours:</strong>
+				<ul>
+					<li>Mon-Sat: 8:00am - 10:00pm</li>
+					<li>Sun: 9:00am - 9:00pm</li>
+				</ul>
+			</div>
+
+			<div class="footer-links">
+				<strong>Contact us:</strong>
+				<ul>
+					<li>76/483467</li>
+					<li><a href="mailto:smartbasketlb@gmail.com">smartbasketlb@gmail.com</a></li>
+				</ul>
+			</div>
+
+			<div class="footer-links">
+				
+				<a href="https://goo.gl/maps/QQeVawgnt8GXHU5D9" target="_blank">
+          		<div id="map-tile">
+            	<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3312.9364090328!2d35.562092015660696!3d33.86552968065718!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x151f17d673bf9603%3A0xbd5ec4c09ab0feed!2sEcole%20sup%C3%A9rieure%20d&#39;ing%C3%A9nieurs%20de%20Beyrouth%20(ESIB)!5e0!3m2!1sen!2slb!4v1646085921852!5m2!1sen!2slb" width="400" height="150" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+          		</div>
+
+        		</a>
+			</div>
+
+		</div>
+	</footer>
+
+
+
+</body>
+</html>
