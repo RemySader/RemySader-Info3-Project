@@ -40,8 +40,8 @@ def register_user():
             confirmed = False
         )                                          #we take the informations that user entered in the signup form and we store them in the database
         user.set_password(form['password'])       #the user's password will be hashed in the database
-        user = Users.query.filter_by(email=user.email).first()
-        if user:
+        user_exists = Users.query.filter_by(email=user.email).first()
+        if user_exists:
             flash('User already exists. Please Login instead or use a different email for Signup.')
             return redirect(url_for('account_page'))  #if the email is already linked to another account, the user must enter another email to signup
 
