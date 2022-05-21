@@ -63,6 +63,14 @@ input[type="submit"]{
     outline: none;
     margin: 10px;
 }
+ul {
+    list-style: none;
+}
+li {
+    color: red;
+    font-weight: 1000;
+    letter-spacing: 0.5px;
+}
 
 
     </style>
@@ -77,6 +85,15 @@ input[type="submit"]{
            <span class="details">Password</span>
            <input name="password" type="password" placeholder="Enter your password" required>
        </div>
+       {% with messages = get_flashed_messages() %}
+        {% if messages %}
+          <ul>
+            {% for message in messages %}
+                <li>{{message}}</li>
+            {% endfor %}
+          </ul>
+        {% endif %}
+        {% endwith %}
      </div>
         <input type="submit" value="Reset">
       </form>

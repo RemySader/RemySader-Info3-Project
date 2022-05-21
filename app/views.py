@@ -167,12 +167,14 @@ def login():
 
 
 
-
-
 @app.route('/forgot_password')
 def forgot_password():
     return render_template('forgot.html')    #this the forgot password page
 
+
+@app.route('/reset')
+def reset():
+    return render_template('reset.html')
 
 
 
@@ -227,6 +229,28 @@ def new_password():
             if user_id:
                 form = request.form
                 user = Users.query.filter_by(id=user_id).first()   #we get the user's infos
+
+                if len(form['password']) < 8:
+                    flash('Password must be at least 8 characters and contain at least two of the following: uppercase letters, lowercase letters, numbers and special characters.')
+                    return render_template('reset.html')
+        
+                requirements = {}
+                for char in form['password']:
+                    if not (char.isalpha() or char.isdigit() or char.isspace()):
+                        requirements['special_characters'] = True
+                    if char.isdigit():
+                        requirements['numbers'] = True
+                    if char.islower():
+                        requirements['lower case'] = True
+                    if char.isupper():
+                        requirements['upper case'] = True
+
+
+                if len(requirements) < 2:
+                    flash('Password must be at least 8 characters and contain at least two of the following: uppercase letters, lowercase letters, numbers and special characters.')
+                    return render_template('reset.html')
+
+
                 user.set_password(form['password'])     #we change his password in the database
                 db.session.add(user)
                 db.session.commit()
