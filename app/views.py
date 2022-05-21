@@ -21,47 +21,6 @@ def index():
 
 
 
-@app.route('/account')
-def account_page():
-    return render_template('account.html')   #this is the login page
-
-
-
-
-
-@app.route('/login', methods=['POST'])              #we want to verify if the user is entering his real informations and that he already created an account
-def login():
-    form = request.form
-    user = Users.query.filter_by(email=form['email-address']).first()  #We get the user's informations from the mail he entered in the login page
-    if not user:
-        flash('User does not exist!!')
-        return redirect(url_for('account_page'))  #if we don't find the user's information from the database, that means the user does not exist and he can not login
-    if user.confirmed == False:
-        email = request.form['email-address']
-
-        token = s.dumps(email, salt='email-confirm')
-
-        msg = Message('Confirm Email', sender='smartbasketlb@gmail.com', recipients=[email])   #we store the user's email so send him the verification link
-
-        link = url_for('confirm_email', token=token, _external=True)    #link of mail
-
-        msg.body = f"To complete your Smart Basket account, please verify your email address by clicking the following link: {link}"  #this is the message that the user will get to verify his email
-
-        mail.send(msg)  
-
-        return '<h1>You can not Login without verifying your account. Please check your email address to complete your Smart Basket Account</h1>'
-        # return redirect(url_for('account_page'))  #Every user get a verification link once they signup, and they can not login if they don't verify their email
-    if user.check_password(form['password']):
-        session['user'] = user.id
-        return redirect(url_for('index2'))  # if the user exists and he entered his password correctly, we will create a session for him
-    else:
-        flash('Password was incorrect!!')
-        return redirect(url_for('account_page')) # if the password is incorrect, the user can not login
-
-
-
-
-
 @app.route('/signup')        
 def signup_page():
     return render_template('signup.html')     #this is the signup page
@@ -118,6 +77,48 @@ def confirm_email(token):
         flash('Registred Successfully. Please Login.')
 
     return render_template('success.html')
+
+
+
+
+@app.route('/account')
+def account_page():
+    return render_template('account.html')   #this is the login page
+
+
+
+
+
+@app.route('/login', methods=['POST'])              #we want to verify if the user is entering his real informations and that he already created an account
+def login():
+    form = request.form
+    user = Users.query.filter_by(email=form['email-address']).first()  #We get the user's informations from the mail he entered in the login page
+    if not user:
+        flash('User does not exist!!')
+        return redirect(url_for('account_page'))  #if we don't find the user's information from the database, that means the user does not exist and he can not login
+    if user.confirmed == False:
+        email = request.form['email-address']
+
+        token = s.dumps(email, salt='email-confirm')
+
+        msg = Message('Confirm Email', sender='smartbasketlb@gmail.com', recipients=[email])   #we store the user's email so send him the verification link
+
+        link = url_for('confirm_email', token=token, _external=True)    #link of mail
+
+        msg.body = f"To complete your Smart Basket account, please verify your email address by clicking the following link: {link}"  #this is the message that the user will get to verify his email
+
+        mail.send(msg)  
+
+        return '<h1>You can not Login without verifying your account. Please check your email address to complete your Smart Basket Account</h1>'
+         #Every user get a verification link once they signup, and they can not login if they don't verify their email
+    if user.check_password(form['password']):
+        session['user'] = user.id
+        return redirect(url_for('index2'))  # if the user exists and he entered his password correctly, we will create a session for this user
+    else:
+        flash('Password was incorrect!!')
+        return redirect(url_for('account_page')) # if the password is incorrect, the user can not login
+
+
 
 
 
@@ -235,10 +236,3 @@ def index2():
 
 
 
-
-# @app.route('/purchase', methods=['POST', 'GET'])
-# def purchase():
-#     purchase_date = PurchaseDate()
-#     db.session.add(purchase_date)
-#     db.session.commit()
-#     return redirect(url_for('index2'))
