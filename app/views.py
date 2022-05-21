@@ -11,6 +11,8 @@ from app import app, db, mail, s
 from app.models import Users
 from importlib_metadata import method_cache
 
+from app.password_validation import validate_pass
+
 
 @app.route('/')
 def index():
@@ -53,25 +55,7 @@ def register_user():
                 return redirect(url_for('signup_page'))
 
 
-
-
-        if len(form['password']) < 8:
-            flash('Password must be at least 8 characters and contain at least two of the following: uppercase letters, lowercase letters, numbers and special characters.')
-            return redirect(url_for('signup_page'))
-        
-        requirements = {}
-        for char in form['password']:
-            if not (char.isalpha() or char.isdigit() or char.isspace()):
-                requirements['special_characters'] = True
-            if char.isdigit():
-                requirements['numbers'] = True
-            if char.islower():
-                requirements['lower case'] = True
-            if char.isupper():
-                requirements['upper case'] = True
-
-
-        if len(requirements) < 2:
+        if validate_pass(form['password']) == False:
             flash('Password must be at least 8 characters and contain at least two of the following: uppercase letters, lowercase letters, numbers and special characters.')
             return redirect(url_for('signup_page'))
 
@@ -226,24 +210,9 @@ def new_password():
             if user_id:
                 form = request.form
                 user = Users.query.filter_by(id=user_id).first()   #we get the user's infos
+                
 
-                if len(form['password']) < 8:
-                    flash('Password must be at least 8 characters and contain at least two of the following: uppercase letters, lowercase letters, numbers and special characters.')
-                    return render_template('reset.html')
-        
-                requirements = {}
-                for char in form['password']:
-                    if not (char.isalpha() or char.isdigit() or char.isspace()):
-                        requirements['special_characters'] = True
-                    if char.isdigit():
-                        requirements['numbers'] = True
-                    if char.islower():
-                        requirements['lower case'] = True
-                    if char.isupper():
-                        requirements['upper case'] = True
-
-
-                if len(requirements) < 2:
+                if validate_pass(form['password']) == False:
                     flash('Password must be at least 8 characters and contain at least two of the following: uppercase letters, lowercase letters, numbers and special characters.')
                     return render_template('reset.html')
 
