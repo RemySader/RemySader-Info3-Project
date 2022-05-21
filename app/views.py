@@ -63,7 +63,7 @@ def register_user():
 @app.route('/confirm_email/<token>')
 def confirm_email(token):
     try:
-        email = s.loads(token, salt='email-confirm', max_age=300)    #we make sure that the user clicked on the link before it expired 
+        email = s.loads(token, salt='email-confirm', max_age=120)    #we make sure that the user clicked on the link before it expired 
     except SignatureExpired:
         return '<h1>The confirmation link is invalid or has expired</h1>' #if the link expired, he will get this error
     user = Users.query.filter_by(email=email).first()        #if he clicked the link on time we store his infos
@@ -163,7 +163,7 @@ def reset_password():
 @app.route('/password_link/<token>')
 def password_link(token):
     try:
-        email = s.loads(token, salt='password-reset', max_age=3600) #we make sure that the user clicked on the link before it expired 
+        email = s.loads(token, salt='password-reset', max_age=120) #we make sure that the user clicked on the link before it expired 
     except SignatureExpired:
         return '<h1>This link is invalid or has expired</h1>'    #if the link expired, he will get this error
     
