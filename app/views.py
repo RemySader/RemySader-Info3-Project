@@ -172,9 +172,6 @@ def forgot_password():
     return render_template('forgot.html')    #this the forgot password page
 
 
-@app.route('/reset')
-def reset():
-    return render_template('reset.html')
 
 
 
