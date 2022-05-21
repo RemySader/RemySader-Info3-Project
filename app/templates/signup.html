@@ -106,7 +106,7 @@ input[type="submit"]{
           </div>
           <div class="input-box">
             <span class="details">Email</span>
-            <input name="email-address" onfocusout="checkIfUserExists(event)" type="email" placeholder="Enter your email" required>
+            <input name="email-address" type="email" placeholder="Enter your email" required>
           </div>
           <div class="input-box">
             <span class="details">Password</span>
@@ -122,7 +122,5 @@ input[type="submit"]{
       </form>
     </div>
   </div>
-  <script src="{{ url_for('static', filename='js/validate-users.js') }}"></script>
-  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 </body>
 </html>

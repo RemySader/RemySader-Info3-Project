@@ -31,30 +31,36 @@ def signup_page():
 
 @app.route('/success', methods=['POST'])   #we want to verify if the user registred succesfully
 def register_user():
-    form = request.form
-    user = Users(
-        first_name=form['first-name'],
-        last_name=form['last-name'],
-        email=form['email-address'],
-        confirmed = False
-    )                                          #we take the informations that user entered in the signup form and we store them in the database
-    user.set_password(form['password'])        #the user's password will be hashed in the database
-    db.session.add(user)
-    db.session.commit()                        #we store the user's informations in the database
- 
-    email = request.form['email-address']
+    if request.method == "POST":
+        form = request.form
+        user = Users(
+            first_name=form['first-name'],
+            last_name=form['last-name'],
+            email=form['email-address'],
+            confirmed = False
+        )                                          #we take the informations that user entered in the signup form and we store them in the database
+        user.set_password(form['password'])       #the user's password will be hashed in the database
+        user = Users.query.filter_by(email=user.email).first()
+        if user:
+            flash('User already exists. Please Login instead or use a different email.')
+            return redirect(url_for('account_page'))
 
-    token = s.dumps(email, salt='email-confirm')
+        db.session.add(user)
+        db.session.commit()                        #we store the user's informations in the database
+    
+        email = request.form['email-address']
 
-    msg = Message('Confirm Email', sender='smartbasketlb@gmail.com', recipients=[email])   #we store the user's email so send him the verification link
+        token = s.dumps(email, salt='email-confirm')
 
-    link = url_for('confirm_email', token=token, _external=True)    #link of mail
+        msg = Message('Confirm Email', sender='smartbasketlb@gmail.com', recipients=[email])   #we store the user's email so send him the verification link
 
-    msg.body = f"To complete your Smart Basket account, please verify your email address by clicking the following link: {link}"  #this is the message that the user will get to verify his email
+        link = url_for('confirm_email', token=token, _external=True)    #link of mail
 
-    mail.send(msg)  
+        msg.body = f"To complete your Smart Basket account, please verify your email address by clicking the following link: {link}"  #this is the message that the user will get to verify his email
 
-    return '<h1>Please check your email address to complete your Smart Basket Account</h1>'
+        mail.send(msg)  
+
+        return '<h1>Please check your email address to complete your Smart Basket Account.</h1>'
 
 
 
@@ -109,7 +115,7 @@ def login():
 
         mail.send(msg)  
 
-        return '<h1>You can not Login without verifying your account. Please check your email address to complete your Smart Basket Account</h1>'
+        return '<h1>You can not Login without verifying your account. Please check your email address to complete your Smart Basket Account.</h1>'
          #Every user get a verification link once they signup, and they can not login if they don't verify their email
     if user.check_password(form['password']):
         session['user'] = user.id
@@ -192,21 +198,6 @@ def new_password():
 
         flash('Password changed succesfully.')
         return redirect(url_for('account_page'))
-
-
-
-
-
-
-@app.route('/validate-users', methods=['POST'])          #we want to verify that the email entered in the signup page has not been already use
-def validate_users():
-    if request.method == "POST":
-        email_address = request.get_json()['email']
-        user = Users.query.filter_by(email=email_address).first()
-        if user:
-            return jsonify({"user_exists": "true"})
-        else:
-            return jsonify({"user_exists": "false"})
 
 
 
