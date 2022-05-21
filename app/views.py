@@ -1,18 +1,15 @@
 from crypt import methods
+from curses.ascii import isalpha
 from datetime import datetime
 
 from flask import (flash, jsonify, redirect, render_template, request, session,
                    url_for)
+from flask_mail import Message
 from itsdangerous import SignatureExpired, URLSafeTimedSerializer
 
 from app import app, db, mail, s
 from app.models import Users
-
-from flask_mail import Message
 from importlib_metadata import method_cache
-
-
-
 
 
 @app.route('/')
@@ -39,8 +36,49 @@ def register_user():
             email=form['email-address'],
             confirmed = False
         )                                          #we take the informations that user entered in the signup form and we store them in the database
+
+
+        if len(user.first_name) < 2 or len(user.last_name) < 2:
+            flash('First name and last name must contain at least two letters')
+            return redirect(url_for('signup_page'))
+        
+        for char in user.first_name:
+            if char.isalpha() == False:
+                flash('First name must contain only letters')
+                return redirect(url_for('signup_page'))
+
+        for char in user.last_name:
+            if char.isalpha() == False:
+                flash('Last name must contain only letters')
+                return redirect(url_for('signup_page'))
+
+
+
+
+        if len(form['password']) < 8:
+            flash('Password must be at least 8 characters and contain at least two of the following: uppercase letters, lowercase letters, numbers and special characters.')
+            return redirect(url_for('signup_page'))
+        
+        requirements = {}
+        for char in form['password']:
+            if not (char.isalpha() or char.isdigit() or char.isspace()):
+                requirements['special_characters'] = True
+            if char.isdigit():
+                requirements['numbers'] = True
+            if char.islower():
+                requirements['lower case'] = True
+            if char.isupper():
+                requirements['upper case'] = True
+
+
+        if len(requirements) < 2:
+            flash('Password must be at least 8 characters and contain at least two of the following: uppercase letters, lowercase letters, numbers and special characters.')
+            return redirect(url_for('signup_page'))
+
+        
+
         user.set_password(form['password'])       #the user's password will be hashed in the database
-        user_exists = Users.query.filter_by(email=user.email).first()
+        user_exists = Users.query.filter_by(email=user.email.lower()).first()
         if user_exists:
             flash('User already exists. Please Login instead or use a different email for Signup.')
             return redirect(url_for('account_page'))  #if the email is already linked to another account, the user must enter another email to signup
@@ -100,7 +138,7 @@ def login():
     form = request.form
     user = Users.query.filter_by(email=form['email-address']).first()  #We get the user's informations from the mail he entered in the login page
     if not user:
-        flash('User does not exist!!')
+        flash('Incorrect email or password')
         return redirect(url_for('account_page'))  #if we don't find the user's information from the database, that means the user does not exist and he can not login
     if user.confirmed == False:
         email = request.form['email-address']
@@ -121,7 +159,7 @@ def login():
         session['user'] = user.id
         return redirect(url_for('index2'))  # if the user exists and he entered his password correctly, we will create a session for this user
     else:
-        flash('Password was incorrect!!')
+        flash('Incorrect email or password')
         return redirect(url_for('account_page')) # if the password is incorrect, the user can not login
 
 
@@ -222,8 +260,3 @@ def index2():
     except:
         return '<h1>Error</h1>'            #if the user is not logged in and tries to access this page, he will get an error
     return render_template('index2.html')
-
-
-
-
-
