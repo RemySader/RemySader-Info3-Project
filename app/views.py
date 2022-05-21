@@ -80,7 +80,7 @@ def register_user():
 
         mail.send(msg)  
 
-        return '<h1>Please check your email address to complete your Smart Basket Account.</h1>'
+        return '<h1>Please check your email address to complete your Smart Basket Account.</h1><br><h2>Enter your email and password in the login page to get a new verification link.</h2>'
 
 
 
