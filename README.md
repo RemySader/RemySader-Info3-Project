@@ -97,11 +97,19 @@ pip install Flask-Mail
 
 
 ## Run Flask
-### Here's how you run the flask app from the terminal:
+### Here's how you run the flask app from the terminal on Mac or Linux:
 
 ```
 cd yourworkdirectory
 . venv/bin/activate
+python3 run.py
+```
+
+### Here's how you run the flask app from the terminal on windows:
+
+```
+cd yourworkdirectory
+.\venv\Scripts\activate
 python3 run.py
 ```
 
