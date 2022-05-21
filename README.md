@@ -78,7 +78,6 @@ pip install Flask-Mail
 | | |────images/
 | | |────js/
 | | | |────cart.js
-| | | |────validate-users.js
 | |────templates/
 | | |────account.html
 | | |────base.html
