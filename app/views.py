@@ -1,15 +1,13 @@
 from crypt import methods
-from curses.ascii import isalpha
 from datetime import datetime
 
-from flask import (flash, jsonify, redirect, render_template, request, session,
+from flask import (flash, redirect, render_template, request, session,
                    url_for)
 from flask_mail import Message
 from itsdangerous import SignatureExpired, URLSafeTimedSerializer
 
 from app import app, db, mail, s
 from app.models import Users
-from importlib_metadata import method_cache
 
 from app.password_validation import validate_pass
 
@@ -33,29 +31,29 @@ def register_user():
     if request.method == "POST":
         form = request.form
         user = Users(
-            first_name=form['first-name'],
-            last_name=form['last-name'],
-            email=form['email-address'],
+            first_name=form['first-name'].capitalize(),
+            last_name=form['last-name'].capitalize(),
+            email=form['email-address'].lower(),
             confirmed = False
         )                                          #we take the informations that user entered in the signup form and we store them in the database
 
 
         if len(user.first_name) < 2 or len(user.last_name) < 2:
             flash('First name and last name must contain at least two letters')
-            return redirect(url_for('signup_page'))
+            return redirect(url_for('signup_page'))    #we make sure that the first and last names are at least 2 characters
         
         for char in user.first_name:
             if char.isalpha() == False:
                 flash('First name must contain only letters')
-                return redirect(url_for('signup_page'))
+                return redirect(url_for('signup_page'))     #we make sure that the first name contains only letters
 
         for char in user.last_name:
             if char.isalpha() == False:
-                flash('Last name must contain only letters')
+                flash('Last name must contain only letters')    #we make sure that the last name contains only letters
                 return redirect(url_for('signup_page'))
 
 
-        if validate_pass(form['password']) == False:
+        if validate_pass(form['password']) == False:  #we make sure that the password entered is at least 8 characters and have at least two of: uppercase letters, lowercase letters, numbers and special characters
             flash('Password must be at least 8 characters and contain at least two of the following: uppercase letters, lowercase letters, numbers and special characters.')
             return redirect(url_for('signup_page'))
 
@@ -120,7 +118,7 @@ def account_page():
 @app.route('/login', methods=['POST'])              #we want to verify if the user is entering his real informations and that he already created an account
 def login():
     form = request.form
-    user = Users.query.filter_by(email=form['email-address']).first()  #We get the user's informations from the mail he entered in the login page
+    user = Users.query.filter_by(email=form['email-address'].lower()).first()  #We get the user's informations from the mail he entered in the login page
     if not user:
         flash('Incorrect email or password')
         return redirect(url_for('account_page'))  #if we don't find the user's information from the database, that means the user does not exist and he can not login
@@ -164,7 +162,7 @@ def forgot_password():
 @app.route('/reset_password', methods=['POST'])
 def reset_password():
     form = request.form
-    user = Users.query.filter_by(email=form['email-address']).first()    
+    user = Users.query.filter_by(email=form['email-address'].lower()).first()    
     if not user:                                                         #we store the user's infos and make sure that the user exists
         flash('User does not exist!!')
         return redirect(url_for('forgot_password'))
@@ -210,11 +208,11 @@ def new_password():
             if user_id:
                 form = request.form
                 user = Users.query.filter_by(id=user_id).first()   #we get the user's infos
-                
+
 
                 if validate_pass(form['password']) == False:
                     flash('Password must be at least 8 characters and contain at least two of the following: uppercase letters, lowercase letters, numbers and special characters.')
-                    return render_template('reset.html')
+                    return render_template('reset.html')    #we make sure that the password entered is at least 8 characters and have at least two of: uppercase letters, lowercase letters, numbers and special characters
 
 
                 user.set_password(form['password'])     #we change his password in the database
