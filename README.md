@@ -105,7 +105,7 @@ cd yourworkdirectory
 python3 run.py
 ```
 
-### Here's how you run the flask app from the terminal on windows:
+### Here's how you run the flask app from the terminal on Windows:
 
 ```
 cd yourworkdirectory
