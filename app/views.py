@@ -192,7 +192,7 @@ def password_link(token):
     except SignatureExpired:
         return '<h1>This link is invalid or has expired</h1>'    #if the link expired, he will get this error
     
-    user = Users.query.filter_by(email=email).first()         #if he clicked the link on time we store his infos
+    user = Users.query.filter_by(email=email.lower()).first()        #if he clicked the link on time we store his infos
 
     session['user_id'] = user.id
 
