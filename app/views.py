@@ -40,22 +40,24 @@ def register_user():
 
         if len(user.first_name) < 2 or len(user.last_name) < 2:
             flash('First name and last name must contain at least two letters')
-            return redirect(url_for('signup_page'))    #we make sure that the first and last names are at least 2 characters
-        
+            #we make sure that the first and last names are at least 2 characters
+            return render_template('signup.html', first_name=user.first_name, last_name=user.last_name, email=user.email, password=form['password']) 
+
         for char in user.first_name:
             if char.isalpha() == False:
                 flash('First name must contain only letters')
-                return redirect(url_for('signup_page'))     #we make sure that the first name contains only letters
+                #we make sure that the first name contains only letters
+                return render_template('signup.html', first_name=user.first_name, last_name=user.last_name, email=user.email, password=form['password'])
 
         for char in user.last_name:
             if char.isalpha() == False:
                 flash('Last name must contain only letters')    #we make sure that the last name contains only letters
-                return redirect(url_for('signup_page'))
+                return render_template('signup.html', first_name=user.first_name, last_name=user.last_name, email=user.email, password=form['password'])
 
 
         if validate_pass(form['password']) == False:  #we make sure that the password entered is at least 8 characters and have at least two of: uppercase letters, lowercase letters, numbers and special characters
             flash('Password must be at least 8 characters and contain at least two of the following: uppercase letters, lowercase letters, numbers and special characters.')
-            return redirect(url_for('signup_page'))
+            return render_template('signup.html', first_name=user.first_name, last_name=user.last_name, email=user.email, password=form['password'])
 
         
 
@@ -63,7 +65,8 @@ def register_user():
         user_exists = Users.query.filter_by(email=user.email.lower()).first()
         if user_exists:
             flash('User already exists. Please Login instead or use a different email for Signup.')
-            return redirect(url_for('signup_page'))  #if the email is already linked to another account, the user must enter another email to signup
+            #if the email is already linked to another account, the user must enter another email to signup
+            return render_template('signup.html', first_name=user.first_name, last_name=user.last_name, email=user.email, password=form['password'])
 
         db.session.add(user)
         db.session.commit()                        #we store the user's informations in the database
@@ -92,7 +95,7 @@ def confirm_email(token):
         email = s.loads(token, salt='email-confirm', max_age=120)    #we make sure that the user clicked on the link before it expired 
     except SignatureExpired:
         return '<h1>The confirmation link is invalid or has expired</h1>' #if the link expired, he will get this error
-    user = Users.query.filter_by(email=email).first()        #if he clicked the link on time we store his infos
+    user = Users.query.filter_by(email=email.lower()).first()        #if he clicked the link on time we store his infos
     if user.confirmed:
         flash('Account already confirmed. Please Login.')
     else:
@@ -121,7 +124,9 @@ def login():
     user = Users.query.filter_by(email=form['email-address'].lower()).first()  #We get the user's informations from the mail he entered in the login page
     if not user:
         flash('Incorrect email or password')
-        return redirect(url_for('account_page'))  #if we don't find the user's information from the database, that means the user does not exist and he can not login
+        #if we don't find the user's information from the database, that means the user does not exist and he can not login
+        return render_template('account.html', email=form['email-address'], password=form['password']) 
+
     if user.confirmed == False and user.check_password(form['password']):
         email = request.form['email-address']
 
@@ -142,7 +147,7 @@ def login():
         return redirect(url_for('index2'))  # if the user exists and he entered his password correctly, we will create a session for this user
     else:
         flash('Incorrect email or password')
-        return redirect(url_for('account_page')) # if the password is incorrect, the user can not login
+        return render_template('account.html', email=form['email-address'], password=form['password']) # if the password is incorrect, the user can not login
 
 
 

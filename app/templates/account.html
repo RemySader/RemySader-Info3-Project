@@ -94,11 +94,11 @@ li {
      <div class="user-details">
        <div class="input-box">
           <span class="details">Email</span>
-          <input name="email-address" type="email" placeholder="Enter your email" required>
+          <input name="email-address" type="email" placeholder="Enter your email" value="{{ email }}" required>
        </div>
        <div class="input-box">
            <span class="details">Password</span>
-           <input name="password" type="password" placeholder="Enter your password" required>
+           <input name="password" type="password" placeholder="Enter your password" value="{{ password }}" required>
        </div>
         {% with messages = get_flashed_messages() %}
         {% if messages %}
