@@ -63,7 +63,7 @@ def register_user():
         user_exists = Users.query.filter_by(email=user.email.lower()).first()
         if user_exists:
             flash('User already exists. Please Login instead or use a different email for Signup.')
-            return redirect(url_for('account_page'))  #if the email is already linked to another account, the user must enter another email to signup
+            return redirect(url_for('signup_page'))  #if the email is already linked to another account, the user must enter another email to signup
 
         db.session.add(user)
         db.session.commit()                        #we store the user's informations in the database
@@ -122,7 +122,7 @@ def login():
     if not user:
         flash('Incorrect email or password')
         return redirect(url_for('account_page'))  #if we don't find the user's information from the database, that means the user does not exist and he can not login
-    if user.confirmed == False:
+    if user.confirmed == False and user.check_password(form['password']):
         email = request.form['email-address']
 
         token = s.dumps(email, salt='email-confirm')
