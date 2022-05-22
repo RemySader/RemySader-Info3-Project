@@ -98,7 +98,7 @@ def confirm_email(token):
     else:
         user.confirmed = True                               #we turn the column 'confirmed' to True in the database and we save the time when he verified his account
         user.confirmed_on = datetime.now()
-        db.session.add(user)
+        # db.session.add(user)
         db.session.commit()
         flash('Registred Successfully. Please Login.')
 
@@ -218,7 +218,7 @@ def new_password():
                 user.set_password(form['password'])     #we change his password in the database
                 db.session.add(user)
                 db.session.commit()
-                session.pop('user', None)
+                session.pop('user_id', None)
         except:
             return '<h1>Error</h1>'            #if the user is not logged in and tries to access this page, he will get an error
 
@@ -248,3 +248,19 @@ def index2():
     except:
         return '<h1>Error</h1>'            #if the user is not logged in and tries to access this page, he will get an error
     return render_template('index2.html')
+
+
+@app.route('/purchase', methods=['POST', 'GET'])
+def purchase():
+    user_id = None
+    try:
+        if session['user']:
+            user_id = session['user']
+    except:
+        return '<h1>Error</h1>'            #if the user is not logged in and tries to access this page, he will get an error
+    
+    user = Users.query.filter_by(id=user_id).first()
+    date = datetime.now()   
+    user.purchase_history += str(date) + ", \n"   #we save all the user's purchase date in our database
+    db.session.commit()
+    return redirect(url_for('index2'))

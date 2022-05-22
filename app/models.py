@@ -1,4 +1,5 @@
 from datetime import datetime
+from email.policy import default
 
 from werkzeug.security import check_password_hash, generate_password_hash
 
@@ -12,6 +13,7 @@ class Users(db.Model):                              #we create the user's table
     email = db.Column(db.String(120), index=True, unique=True, nullable=False)
     confirmed = db.Column(db.Boolean, nullable=False, default=False)
     confirmed_on = db.Column(db.DateTime(timezone=True), nullable=True)
+    purchase_history = db.Column(db.String(), nullable=False, default='')
     password_hash = db.Column(db.String(120))
 
     def set_password(self, password):
