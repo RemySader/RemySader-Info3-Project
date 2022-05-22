@@ -1,4 +1,4 @@
 from app import app
 
 if __name__ == '__main__':
-    app.run()                                   #here we run our application
+    app.run(host='192.168.0.102')                                   #here we run our application

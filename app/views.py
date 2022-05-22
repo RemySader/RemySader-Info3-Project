@@ -44,13 +44,13 @@ def register_user():
             return render_template('signup.html', first_name=user.first_name, last_name=user.last_name, email=user.email, password=form['password']) 
 
         for char in user.first_name:
-            if char.isalpha() == False:
+            if char.isalpha() == False and char != " ":
                 flash('First name must contain only letters')
                 #we make sure that the first name contains only letters
                 return render_template('signup.html', first_name=user.first_name, last_name=user.last_name, email=user.email, password=form['password'])
 
         for char in user.last_name:
-            if char.isalpha() == False:
+            if char.isalpha() == False and char != " ":
                 flash('Last name must contain only letters')    #we make sure that the last name contains only letters
                 return render_template('signup.html', first_name=user.first_name, last_name=user.last_name, email=user.email, password=form['password'])
 
